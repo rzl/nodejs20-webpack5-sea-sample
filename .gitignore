@@ -1,5 +1,5 @@
 *.exe
 *.blob
-
+*.sqlite
 node_modules/
 dist/

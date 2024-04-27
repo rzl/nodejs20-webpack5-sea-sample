@@ -21,6 +21,7 @@ async function main() {
     fse.copySync('public', 'dist/public')
     fse.copySync('views', 'dist/views')
     fse.moveSync('hello.exe', 'dist/hello.exe', { overwrite: true })
+    console.log('\ncd dist && hello.exe\n')
 }
 
 main();
