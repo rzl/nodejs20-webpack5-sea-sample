@@ -1,2 +1,4 @@
 *.exe
 *.blob
+
+node_modules/
