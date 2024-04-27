@@ -25,7 +25,7 @@ async function main() {
     /**
      * sqlit3引入node_sqlite3.node时,使用bingings,该模块会判断package.json作为模块目录
      */
-    fse.copyFileSync('package.json', 'dist/package.json', { overwrite: true })
+    fse.copySync('package.json', 'dist/package.json')
 
     console.log('\ncd dist && hello.exe\n')
 
