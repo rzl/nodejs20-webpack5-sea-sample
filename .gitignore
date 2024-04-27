@@ -2,3 +2,4 @@
 *.blob
 
 node_modules/
+dist/
