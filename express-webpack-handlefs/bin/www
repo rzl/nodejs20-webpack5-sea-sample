@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 const sea = require('node:sea');
-const path = require('node:path'); 
+const path = require('node:path');
 const { Buffer } = require('node:buffer');
 
 /**
- * 
+ * 这里只是一个试验
  */
 const { createRequire } = require('node:module');
 _require = createRequire(__filename);
+
 require = function (...args) {
   var module = args[0]
   if (module === 'fs') {
@@ -20,7 +21,7 @@ require = function (...args) {
 
           console.log(`get data from sea asset ${relativeName}`)
 
-          return  Buffer.from(sea.getAsset(relativeName))
+          return Buffer.from(sea.getAsset(relativeName))
         } catch (e) {
           console.error('get from sea failed')
           console.error(e)
@@ -30,8 +31,25 @@ require = function (...args) {
 
       return readFileSync(...readFileSync_args)
     }
+    var statSync = fs.statSync
+    fs.statSync = function (...statSync_args) {
+      if (sea.isSea() && statSync_args[0].match('.ejs$')) {
+        try {
+          return statSync(__filename)
+        } catch (e) {
+          console.error('get from sea failed')
+          console.error(e)
+        }
+      }
+      console.log(`get data from fs ${statSync_args}`)
+
+      return statSync(...statSync_args)
+    }
+
     return fs
   }
+
+  
   return _require(...args)
 }
 /**
@@ -121,4 +139,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }
