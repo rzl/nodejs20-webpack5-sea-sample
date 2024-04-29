@@ -25,6 +25,10 @@ if (os.platform() == 'linux') {
     injectInto = 'npx postject hello.exe NODE_SEA_BLOB sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --macho-segment-name NODE_SEA '
 }
 
+function sea_assets(fileOrDir = []) {
+
+}
+
 async function sea_main() {
     await sea_exec(generateBlob)
     await sea_exec(cpExecutable)
@@ -34,7 +38,8 @@ async function sea_main() {
 
 module.exports = {
     sea_main,
-    sea_exec
+    sea_exec,
+    sea_assets
 }
 
 
