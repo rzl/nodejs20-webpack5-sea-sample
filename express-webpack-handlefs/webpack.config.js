@@ -1,4 +1,8 @@
 const path = require('path');
+const webpack = require('webpack');
+const { readDirs } = require('../sea-cmd')
+
+
 const serverConfig = {
     target: 'node',
     node: {
@@ -15,6 +19,12 @@ const serverConfig = {
     optimization: {
         minimize: false
     },
+    plugins: [
+        new webpack.DefinePlugin({
+
+            SEA_FILE_DATA: JSON.stringify(readDirs(['views', 'public', 'package.json'])),
+        })
+    ],
     module: {
         rules: [
             /**

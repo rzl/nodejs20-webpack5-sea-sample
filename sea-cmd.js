@@ -1,7 +1,9 @@
 
-var os = require('os');
+const os = require('os');
 const util = require('node:util');
 const exec = util.promisify(require('node:child_process').exec);
+const fs = require('fs');
+const path = require('path');
 
 async function sea_exec(str) {
     console.log('start -----------------------------------------------------');
@@ -26,8 +28,34 @@ if (os.platform() == 'linux') {
 }
 
 function sea_assets(fileOrDir = []) {
-
+    
 }
+function readDir(dir, result = {}, stat) {
+  if (!stat) {
+      var stat = fs.statSync(dir);
+  }
+  if (!stat.isDirectory()) {
+      result[dir.replace(/\\/g, '/')] = { data: fs.readFileSync(dir).toString('base64'), stat: stat };
+      return result;
+  } else {
+      var dirList = fs.readdirSync(dir);
+      result[dir.replace(/\\/g, '/')] = { data: dirList, stat: stat };
+      dirList.forEach((item) => {
+          let pathName = path.join(dir, item)
+          readDir(pathName, result);
+      })
+  }
+  return result;
+}
+
+function readDirs(paths = []) {
+  var res = {}
+  paths.forEach((item) => {
+      readDir(item, res)
+  })
+  return res
+}
+
 
 async function sea_main() {
     await sea_exec(generateBlob)
@@ -39,7 +67,9 @@ async function sea_main() {
 module.exports = {
     sea_main,
     sea_exec,
-    sea_assets
+    sea_assets,
+    readDir,
+    readDirs
 }
 
 
