@@ -3,7 +3,7 @@ const os = require('os')
 const express = require('express')
 const app = express()
 const pty = require("node-pty");
-const port = 3000
+const port = 3001
 require('express-ws')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 

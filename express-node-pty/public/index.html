@@ -31,7 +31,7 @@
         xterm.open(d);
         xterm.focus();
         var cmd = ''
-        dd.ws = new WebSocket(`ws://localhost:3000/xterm/${rows}/${cols}`)
+        dd.ws = new WebSocket(`ws://localhost:3001/xterm/${rows}/${cols}`)
         dd.ws.onmessage = (e) => {
             console.log(typeof e.data)
             console.log(e)
